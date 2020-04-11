@@ -1,7 +1,7 @@
 @extends('template') 
 
 @section('conteudo')               
-        
+        <h2>Lista de vendas cadastradas:</h2>
         <table class="table table-striped table-dark">
             <thead >
                 <th scope="col">#</th>

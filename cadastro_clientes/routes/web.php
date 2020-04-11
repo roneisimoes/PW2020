@@ -49,3 +49,10 @@ Route::get('/vendas/excluir/{id}', 'VendaController@excluir')->name('venda_delet
 //alterar_vendads
 Route::get('/vendas/alterar/{id}', 'VendaController@alteracao')->name('venda_tela_alterar');;
 Route::post('/vendas/alteracao/{id}', 'VendaController@alterar')->name('venda_alterar');
+
+//login e logout
+Route::get('/tela_login', 'AppController@tela_login')->name('tela_login');
+
+Route::post('/login', 'AppController@login')->name('login');
+
+Route::get('/logout', 'AppController@logout')->name('logout');

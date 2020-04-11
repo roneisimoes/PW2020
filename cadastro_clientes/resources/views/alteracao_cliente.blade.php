@@ -19,7 +19,11 @@
 				<option>RS</option>
 				<option>SP</option>
 				<option>RJ</option>
-			</select><br>
+			</select>
+			<label style="color: white;" for="login">Login:</label>
+			<input type="text" class="form-control" maxlength="255" name="login" placeholder="Login" value="{{ $c->login}}">
+			<label style="color: white;" for="senha">Senha:</label>
+			<input type="password" class="form-control" maxlength="100" name="senha" placeholder="Senha" value="{{ $c->senha}}"><br>
 			<button type="submit" class="btn btn-secondary">Cadastar</button>
 	</form>
 @endsection

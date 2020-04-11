@@ -9,8 +9,12 @@ use App\Cliente;
 class VendaController extends Controller
 {
     function cadastro(){
+        if (session()->has("login")){
     	$cliente = Cliente::all();
     	return view("cadastro_venda", ["clientes" => $cliente]);
+        }
+
+        return redirect()->route('tela_login');
     }
 
     function nova(Request $req){
@@ -34,8 +38,12 @@ class VendaController extends Controller
     }
 
     function listar(){
+        if (session()->has("login")){
     	$lista = Venda::all();
     	return view("listar_vendas", ["vendas" => $lista]);
+        }
+
+         return redirect()->route('tela_login');
     }
 
     function excluir($id){

@@ -11,7 +11,7 @@
 	body{
 		background-color: black;
 	}
-	h1, h4{
+	h1,h2, h4{
 		color: white;
 		font-family:candara;
         font-style:italic;
@@ -47,6 +47,13 @@
                             <a class="dropdown-item" href="{{ route('listar_vendas') }}">Lista de vendas</a>
                             <a class="dropdown-item" href="{{ route('cadastrar_venda') }}">Cadastrar nova</a>
                             </div>
+                        </li>
+                        <li class="nav-item dropdown" >
+                            @if(session()->has('login'))
+                                <a class="nav-link " href="{{ route('logout') }}">Fazer Logout</a>
+                            @else 
+                                <a class="nav-link " href="{{ route('tela_login') }}">Fazer Login</a>
+                            @endif
                         </li>
                     </ul>
                 </div>
