@@ -21,6 +21,7 @@
                         <td>
                             <a class="btn btn-danger" href="#" onclick="exclui({{$venda->id}})">Excluir</a>
                             <a class="btn btn-warning" href="{{ route('venda_tela_alterar', [ 'id' => $venda->id ]) }}">Alterar</a>
+                            <a class="btn btn-info"href="{{ route('cadastrar_venda_item', [ 'id' => $venda->id ]) }}">Produtos</a>
                         </td>
 					</tr>
                 @endforeach

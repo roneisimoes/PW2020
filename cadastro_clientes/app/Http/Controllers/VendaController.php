@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Venda;
 use App\Cliente;
+use App\Produto;
 
 class VendaController extends Controller
 {
@@ -18,22 +19,24 @@ class VendaController extends Controller
     }
 
     function nova(Request $req){
-    	$valor = $req->input("valor");
+    	//$valor = $req->input("valor");
+        $id_cliente = $req->input('id_cliente');
 
     	$venda = new Venda();
-    	$venda->id_cliente = $req->input("id_cliente");
-    	$venda->descricao = $req->input("descricao");
-        $venda->valor = $valor;
+        $venda->descricao = $req->input("descricao");
+        $venda->valor = 0;
+    	$venda->id_cliente = $id_cliente;
+        
 
         if ($venda->save()) {
-            $msg = "Venda feita para " . $venda->cliente->nome;
+            $msg = "Venda adicionada";
             $classe = "success";
         } else {
             $msg = "Venda não foi concluida.";
             $classe = "danger";
         }
         
-        return view('resultado', [ "msg" => $msg, "classe" => $classe]);
+        return redirect()->route('cadastrar_venda_item', ["id" => $venda->id]);
 
     }
 
@@ -73,7 +76,7 @@ class VendaController extends Controller
     	$venda = Venda::find($id);
     	$venda->id_cliente = $req->input("id_cliente");
     	$venda->descricao = $req->input("descricao");
-        $venda->valor = $valor;
+        //$venda->valor = $valor;
 
         if ($venda->save()) {
             $msg = "Venda feita para " . $venda->cliente->nome . " alterada com sucesso";
@@ -84,6 +87,58 @@ class VendaController extends Controller
         }
         
         return view('resultado', [ "msg" => $msg, "classe" => $classe]);
+    }
+
+    function cadastroItem($id) {
+        if (session()->has("login")){
+            $venda = Venda::find($id);
+            $produtos = Produto::all();
+            return view('cadastro_item', [ 'venda' => $venda, 
+                'produtos' => $produtos ]);
+        }
+
+        return redirect()->route('tela_login');
+    }
+
+    function novoItem(Request $req, $id) {
+        $id_produto = $req->input('id_produto');
+        $quantidade = $req->input('quantidade');
+
+        $produto = Produto::find($id_produto);
+        $venda = Venda::find($id);
+        $subtotal = $produto->valor_unitario * $quantidade;
+
+        $colunas_pivot = [
+            'quantidade' => $quantidade,
+            'subtotal' => $subtotal
+        ];
+
+        $venda->produtos()->attach($produto->id, $colunas_pivot);
+        $venda->valor += $subtotal;
+        $venda->save();
+
+        return redirect()->route('cadastrar_venda_item', 
+            ['id' => $venda->id]);
+
+    }
+
+     function excluirItem($id, $id_pivot){
+        $venda = Venda::find($id);
+        $subtotal = 0;
+
+        foreach($venda->produtos as $vp){
+            if ($vp->pivot->id == $id_pivot){
+                $subtotal = $vp->pivot->subtotal;
+                break;
+            }
+        }
+
+        $venda->valor -= $subtotal; 
+        $venda->produtos()->wherePivot('id', '=', $id_pivot)-> detach();
+        $venda->save();
+
+        return redirect()->route('cadastrar_venda_item', 
+            ['id' => $id]);
     }
 
 

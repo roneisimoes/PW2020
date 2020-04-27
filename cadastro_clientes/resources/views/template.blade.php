@@ -48,6 +48,17 @@
                             <a class="dropdown-item" href="{{ route('cadastrar_venda') }}">Cadastrar nova</a>
                             </div>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Produtos
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('listar_produtos') }}">Lista de Produtos</a>
+                            <a class="dropdown-item" href="{{ route('cadastrar_produtos') }}">Cadastrar novo produto</a>
+                            <a class="dropdown-item" href="{{ route('listar_tipo_produtos') }}">Lista de tipo de produto</a>
+                            <a class="dropdown-item" href="{{ route('cadastrar_tipo_produtos') }}">Cadastrar novo tipo de produto</a>
+                            </div>
+                        </li>
                         <li class="nav-item dropdown" >
                             @if(session()->has('login'))
                                 <a class="nav-link " href="{{ route('logout') }}">Fazer Logout</a>
