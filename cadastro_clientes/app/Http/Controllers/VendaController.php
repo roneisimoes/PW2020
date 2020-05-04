@@ -10,12 +10,8 @@ use App\Produto;
 class VendaController extends Controller
 {
     function cadastro(){
-        if (session()->has("login")){
     	$cliente = Cliente::all();
     	return view("cadastro_venda", ["clientes" => $cliente]);
-        }
-
-        return redirect()->route('tela_login');
     }
 
     function nova(Request $req){
@@ -41,12 +37,8 @@ class VendaController extends Controller
     }
 
     function listar(){
-        if (session()->has("login")){
     	$lista = Venda::all();
     	return view("listar_vendas", ["vendas" => $lista]);
-        }
-
-         return redirect()->route('tela_login');
     }
 
     function excluir($id){
@@ -90,14 +82,11 @@ class VendaController extends Controller
     }
 
     function cadastroItem($id) {
-        if (session()->has("login")){
+     
             $venda = Venda::find($id);
             $produtos = Produto::all();
             return view('cadastro_item', [ 'venda' => $venda, 
                 'produtos' => $produtos ]);
-        }
-
-        return redirect()->route('tela_login');
     }
 
     function novoItem(Request $req, $id) {

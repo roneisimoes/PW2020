@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Cliente;
+use Auth;
 
 class AppController extends Controller
 {
@@ -35,8 +36,8 @@ class AppController extends Controller
     }
 
     function logout(){
-        session()->forget(["login"]);
+        Auth::logout();
         
-         return redirect()->route('tela_login');
+         return redirect()->route('login');
     }
 }
