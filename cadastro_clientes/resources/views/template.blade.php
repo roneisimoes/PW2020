@@ -11,7 +11,7 @@
 	body{
 		background-color: black;
 	}
-	h1,h2, h4{
+	h1,h2, h4, p {
 		color: white;
 		font-family:candara;
         font-style:italic;
@@ -60,7 +60,7 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown" >
-                            @if(session()->has('login'))
+                            @if(Auth::check())
                                 <a class="nav-link " href="{{ route('logout') }}">Fazer Logout</a>
                             @else 
                                 <a class="nav-link " href="{{ route('tela_login') }}">Fazer Login</a>
@@ -74,6 +74,12 @@
 		<div class="row">
 			<div class="col-md-2"></div><!-- coluna esquerda -->
 			<div class="col-md-8 mt-5">
+                <p>Olá, {{ Auth::user()->name }}.</p>
+                @if(session()->has('mensagem'))
+                <div class="alert alert-danger">{{ session('mensagem')}}</div>
+                {{ session()->forget(['mensagem']) }}
+                @endif
+
 				@yield('conteudo')
 			</div>
 			<div class="col-md-2"></div><!-- coluna direita-->

@@ -8,13 +8,8 @@ use App\Cliente;
 class ClientesController extends Controller
 {
     function nomesClientes(){
-    	if (session()->has("login")){
         $clientes = Cliente::all();
-
     	return view("lista_clientes", ["clientes" => $clientes]);
-        }
-        
-        return redirect()->route('tela_login');
     }
 
     function cadastro(){
@@ -32,8 +27,7 @@ class ClientesController extends Controller
     	$cep = $req->input('cep');
     	$cidade = $req->input('cidade');
     	$estado = $req->input('estado');
-        $login = $req->input('login');
-        $senha = $req->input('senha');
+        
 
     	$cliente = new Cliente();
     	$cliente->nome = $nome;
@@ -41,8 +35,7 @@ class ClientesController extends Controller
     	$cliente->cep = $cep;
     	$cliente->cidade = $cidade;
     	$cliente->estado = $estado;
-        $cliente->login = $login;
-        $cliente->senha = $senha;
+       
   
 
     	if ($cliente->save()){
@@ -62,8 +55,7 @@ class ClientesController extends Controller
         $cep = $req->input('cep');
         $cidade = $req->input('cidade');
         $estado = $req->input('estado');
-        $login = $req->input('login');
-        $senha = $req->input('senha');
+        
 
         $cliente = Cliente::find($id);
         $cliente->nome = $nome;
@@ -71,8 +63,7 @@ class ClientesController extends Controller
         $cliente->cep = $cep;
         $cliente->cidade = $cidade;
         $cliente->estado = $estado;
-        $cliente->login = $login;
-        $cliente->senha = $senha;
+        
         
         if ($cliente->save()){
             $msg = "Cliente $nome alterado com sucesso!!";
