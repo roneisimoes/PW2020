@@ -9,12 +9,8 @@ use App\TipoProdutos;
 class ProdutosController extends Controller
 {
      function cadastro() {
-        if (session()->has("login")){
             $tp = TipoProdutos::all();
-       		return view('cadastrar_produtos', ["tp" => $tp]);  
-        }
-
-        return redirect()->route('tela_login');
+       		return view('cadastrar_produtos', ["tp" => $tp]); 
     }
 
     function novo(Request $req) {
@@ -61,13 +57,9 @@ class ProdutosController extends Controller
         return view('resultado', ["msg" => $mensagem, "classe" => $classe]); 
     }
 
-     function listar() {  
-        if (session()->has("login")){      
+     function listar() {        
         $lista = Produto::all();
         return view('listar_produtos', [ "lista" => $lista]);
-        }
-
-         return redirect()->route('tela_login');
     }
 
     function excluir($id) {
